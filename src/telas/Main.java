@@ -1,30 +1,38 @@
+package telas;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
-
 import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
+import classes.Cliente;
+import classes.Filme;
+import telas.FilmeAluguel;
+import telas.FilmeCadastro;
+
 
 class Main {
 	JMenu menuCadastros, submenuCadastros, menuLocacao;
 	JMenuItem i1, i2, i3, i4, i5, i6, i7;
-	List<String> categorias, filmes;
-	ArrayList<String> cadGenero = new ArrayList<>();
+	ArrayList<String> categorias, generos;
+	ArrayList<Filme> filmes;
+	ArrayList<Cliente> clientes;
+	
+	//ArrayList<String> cadGenero = new ArrayList<>(Arrays.asList (new String[]{"", "Ação", "Aventura", "Comédia", "Drama", "Romance", "Suspense", "Terror", "Musical"}));
 	
 	
 	Main() {
 		
-		//generos = new ArrayList<>(Arrays.asList (new String[]{"", "Ação", "Aventura", "Comédia", "Drama", "Romance", "Suspense", "Terror", "Musical"}));
+		generos = new ArrayList<>(Arrays.asList (new String[]{"", "Ação", "Aventura", "Comédia", "Drama", "Romance", "Suspense", "Terror", "Musical"}));
 		categorias = new ArrayList<String>(Arrays.asList (new String[]{"", "Lançamento", "Padrão", "Antigo"}));
-		filmes = new ArrayList<String>();
+		filmes = new ArrayList<Filme>();
+		clientes = new ArrayList<Cliente>();
 		
 		JFrame f = new JFrame("Locadora");
 		JMenuBar mb = new JMenuBar();
@@ -37,16 +45,12 @@ class Main {
 		final JDesktopPane jdpGenero = new JDesktopPane();
 		i1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Genero generoFrame = new Genero(cadGenero);
+				Genero generoFrame = new Genero(generos);
 				generoFrame.setVisible(true);
 				jdpGenero.add(generoFrame);
 				f.setContentPane(jdpGenero);
-				//setGeneros();
-				//resetGeneros();
-				for(String s: cadGenero) {
-					System.out.println(s);
-				}
-				
+				/*for(String s: generos) {
+					System.out.println(s);}*/
 			}
 		});
 
@@ -54,11 +58,9 @@ class Main {
 		i2 = new JMenuItem("Categoria");
 		final JDesktopPane jdpCategoria = new JDesktopPane();
 		i2.addActionListener(new ActionListener() {
-
 			public void actionPerformed(ActionEvent e) {
-				Categoria categoriaFrame = new Categoria();
-				
-				jdpCategoria.add(categoriaFrame);
+				Categoria categoriaFrame = new Categoria(categorias);
+				jdpCategoria.add(categoriaFrame);				
 				categoriaFrame.setVisible(true);
 				f.setContentPane(jdpCategoria);
 			}
@@ -68,10 +70,8 @@ class Main {
 		i3 = new JMenuItem("Filme");
 		final JDesktopPane jdpFilme = new JDesktopPane();
 		i3.addActionListener(new ActionListener() {
-
 			public void actionPerformed(ActionEvent e) {
-				Filme filmeFrame = new Filme();
-				
+				FilmeCadastro filmeFrame = new FilmeCadastro(filmes, generos, categorias);
 				jdpFilme.add(filmeFrame);
 				filmeFrame.setVisible(true);
 				f.setContentPane(jdpFilme);
@@ -82,9 +82,8 @@ class Main {
 		i4 = new JMenuItem("Cliente");
 		final JDesktopPane jdpCliente = new JDesktopPane();
 		i4.addActionListener(new ActionListener() {
-
 			public void actionPerformed(ActionEvent e) {
-				Cliente clienteFrame = new Cliente();
+				ClienteCadastro clienteFrame = new ClienteCadastro(clientes);
 				
 				jdpCliente.add(clienteFrame);
 				clienteFrame.setVisible(true);
@@ -110,9 +109,8 @@ class Main {
 		i7 = new JMenuItem("Nova");
 		final JDesktopPane jdpNova = new JDesktopPane();
 		i7.addActionListener(new ActionListener() {
-
 			public void actionPerformed(ActionEvent e) {
-				Filme novaFrame = new Filme();
+				FilmeAluguel novaFrame = new FilmeAluguel(filmes, generos, categorias, clientes);
 				
 				jdpNova.add(novaFrame);
 				novaFrame.setVisible(true);
@@ -126,7 +124,7 @@ class Main {
 		
 		
 		f.setJMenuBar(mb);
-		f.setSize(400, 400);
+		f.setSize(650, 450);
 		f.setLayout(null);
 		f.setLocationRelativeTo(null);
 		f.setVisible(true);
@@ -140,23 +138,9 @@ class Main {
 	}
 
 	
+	
 	public static void main(String args[]) {
 		new Main();
 	}
 	
-	
-	/*public void setGeneros(){
-		for(String s: Genero.cadGenero) {
-			generos.add(s);
-			
-		}
-	}
-	
-	public void resetGeneros(){
-		for(int i = 0; i < Genero.cadGenero.size(); i++) {
-			Genero.cadGenero[i] = "";
-		}
-	}*/
-	
-	
-	}
+}
